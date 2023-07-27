@@ -10,6 +10,10 @@ public abstract class VendingItem {
     private String name;
     private double cost;
 
+    public VendingItem(){
+        
+    }
+
     public VendingItem(String slot, String name, double cost) {
         this.slot = slot;
         this.name = name;
