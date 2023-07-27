@@ -66,7 +66,7 @@ public class VendingMachineCLI {
 
 	public VendingItem parseItem(String nextLine) {
 		String[] itemSpecs = nextLine.split(","); // turning line of data into string array and splitting into 4 items
-		
+		itemSpecs[0] =
 	}
 
 
