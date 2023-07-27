@@ -16,7 +16,7 @@ public class VendingMachineCLI {
 	private Menu menu;
 
 	private Map<String, List<VendingItem>> inventory;
-	private Map<String, String> whatGoesInEachSlot;
+	private Map<String, String> index;
 	private Scanner userInput  = new Scanner(System.in);
 
 	public VendingMachineCLI(Menu menu) {
@@ -45,7 +45,7 @@ public class VendingMachineCLI {
 			}
 		}
 		inventory = loadItems();
-		whatGoesInEachSlot = indexItems();
+		index = indexItems();
 		System.out.println("Please enter an item selection: ");
 		String slot = userInput.nextLine();
 	}
@@ -64,13 +64,17 @@ public class VendingMachineCLI {
 	}
 
 	public void displayAllItems(){
-		//list coming from the map, that is just the values
-		if (list.size() == 0){
-			System.out.println();
+		for(Map.Entry<String, String> element: index.entrySet()) {
+			String slot = element.getKey();
+			String name = element.getValue();
+			int quantity = getquantity(element);
+			System.out.println(slot + ": " + name);
 		}
-		VendingItem item = list.get(0);
-		String name = item.getName();
-		System.out.println(name);
+		// , they're presented with a list of all items in the vending machine with its quantity remaining:
+		//Each vending machine product has a slot identifier and a purchase price.
+		int Quantity;
+
+
 	}
 
 
