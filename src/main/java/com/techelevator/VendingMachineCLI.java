@@ -15,6 +15,8 @@ public class VendingMachineCLI {
 
 	private Menu menu;
 
+	private Map<String, List<VendingItem>> inventory;
+
 	public VendingMachineCLI(Menu menu) {
 		this.menu = menu;
 	}
@@ -40,19 +42,24 @@ public class VendingMachineCLI {
 				break;
 			}
 		}
+		inventory = loadItems();
 	}
 
-	public Map<String, VendingItem> loadItems(){
+	public Map<String, List<VendingItem>> loadItems(){
 		File inputFile = new File("main.csv"); //taking in main.csv
-		Map<String, VendingItem> vendingItems = new HashMap<>(); //creating list for items to go in
+		Map<String, List<VendingItem>> vendingItems = new HashMap<>(); //creating list for items to go in
 
 
 		try{
 			Scanner input = new Scanner(inputFile); //scanner to read file
 			while(input.hasNextLine()){ //loop to check if there is another line of data to read
 				String nextLine = input.nextLine(); //variable for the next line
-				VendingItem itemSpecs = parseItem(nextLine);
-				vendingItems.put(itemSpecs.getSlot(), itemSpecs);
+				List<VendingItem> slotsItems = new ArrayList<>();
+				for (int i = 0; i < 5; i++) {
+					slotsItems.add(getItem(nextLine));
+				}
+				String slot = getItem(nextLine).getSlot();
+				vendingItems.put(slot, slotsItems);
 			}
 		} catch (FileNotFoundException e){
 			throw new RuntimeException(e);
@@ -62,7 +69,7 @@ public class VendingMachineCLI {
 	}
 
 
-	public VendingItem parseItem(String nextLine) {
+	public VendingItem getItem(String nextLine) {
 		String[] itemSpecs = nextLine.split(","); // turning line of data into string array and splitting into 4 items
 		String slot = itemSpecs[0];
 		String name = itemSpecs[1];
