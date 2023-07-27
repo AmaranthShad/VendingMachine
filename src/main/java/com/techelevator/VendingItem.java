@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class VendingItem {
+public abstract class VendingItem {
     private String slot;
     private String name;
     private double cost;
+
+    public VendingItem(){
+        
+    }
 
     public VendingItem(String slot, String name, double cost) {
         this.slot = slot;
@@ -39,5 +43,7 @@ public class VendingItem {
     public void setCost(double cost) {
         this.cost = cost;
     }
+
+    public abstract void getEaten();
 
 }
