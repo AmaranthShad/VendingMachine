@@ -66,9 +66,25 @@ public class VendingMachineCLI {
 
 	public VendingItem parseItem(String nextLine) {
 		String[] itemSpecs = nextLine.split(","); // turning line of data into string array and splitting into 4 items
-		itemSpecs[0] =
+		String slot = itemSpecs[0];
+		String name = itemSpecs[1];
+		Double cost = Double.parseDouble(itemSpecs[2]);
+		String type = "";
+		type = itemSpecs[3];
+
+		VendingItem item = null;
+		switch (type) {
+			case "Gum":
+				item = new Gum(slot, name, cost); break;
+			case "Drink":
+				item = new Drink(slot, name, cost); break;
+			case "Candy":
+				item = new Candy(slot, name, cost); break;
+			case "Munchy":
+				item = new Munchy(slot, name, cost); break;
+		}
+
+		return item;
 	}
-
-
 
 }

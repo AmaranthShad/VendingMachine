@@ -11,7 +11,7 @@ public abstract class VendingItem {
     private double cost;
 
     public VendingItem(){
-        
+
     }
 
     public VendingItem(String slot, String name, double cost) {
