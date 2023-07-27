@@ -5,9 +5,7 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class VendingMachineCLI {
 
@@ -44,9 +42,9 @@ public class VendingMachineCLI {
 		}
 	}
 
-	public List<VendingItem> loadItems(){
+	public Map<String, VendingItem> loadItems(){
 		File inputFile = new File("main.csv"); //taking in main.csv
-		List<VendingItem> vendingItems = new ArrayList<>(); //creating list for items to go in
+		Map<String, VendingItem> vendingItems = new HashMap<>(); //creating list for items to go in
 
 
 		try{
@@ -54,13 +52,13 @@ public class VendingMachineCLI {
 			while(input.hasNextLine()){ //loop to check if there is another line of data to read
 				String nextLine = input.nextLine(); //variable for the next line
 				VendingItem itemSpecs = parseItem(nextLine);
-				vendingItems.add(itemSpecs);
+				vendingItems.put(itemSpecs.getSlot(), itemSpecs);
 			}
 		} catch (FileNotFoundException e){
 			throw new RuntimeException(e);
 		}
 
-	return null;
+	return vendingItems;
 	}
 
 
@@ -85,6 +83,12 @@ public class VendingMachineCLI {
 		}
 
 		return item;
+	}
+
+	public VendingItem selectItem(String slot){
+		//slot will be the key
+		//check if slot exists
+		//check if slot has items left(list of 5 of that item)
 	}
 
 }
