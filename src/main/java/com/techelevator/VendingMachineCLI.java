@@ -4,6 +4,7 @@ package com.techelevator;
 // Build out a menu class to start
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -44,19 +45,30 @@ public class VendingMachineCLI {
 	}
 
 	public List<VendingItem> loadItems(){
-		File inputFile = new File("main.csv");
-		List<VendingItem> vendingItems = new ArrayList<>();
+		File inputFile = new File("main.csv"); //taking in main.csv
+		List<VendingItem> vendingItems = new ArrayList<>(); //creating list for items to go in
 
 
 		try{
-			Scanner input = new Scanner(inputFile);
-			while(input.hasNextLine()){
-				String nextLine = input.nextLine();
-				nextLine.split(",");
-				loadItems.add();
+			Scanner input = new Scanner(inputFile); //scanner to read file
+			while(input.hasNextLine()){ //loop to check if there is another line of data to read
+				String nextLine = input.nextLine(); //variable for the next line
+				VendingItem itemSpecs = parseItem(nextLine);
+				vendingItems.add(itemSpecs);
 			}
+		} catch (FileNotFoundException e){
+			throw new RuntimeException(e);
 		}
 
-
+	return null;
 	}
+
+
+	public VendingItem parseItem(String nextLine) {
+		String[] itemSpecs = nextLine.split(","); // turning line of data into string array and splitting into 4 items
+		
+	}
+
+
+
 }
