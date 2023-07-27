@@ -16,6 +16,7 @@ public class VendingMachineCLI {
 	private Menu menu;
 
 	private Map<String, List<VendingItem>> inventory;
+	private Scanner userInput  = new Scanner(System.in);
 
 	public VendingMachineCLI(Menu menu) {
 		this.menu = menu;
@@ -43,7 +44,21 @@ public class VendingMachineCLI {
 			}
 		}
 		inventory = loadItems();
+
+		System.out.println("Please enter an item selection: ");
+		String slot = userInput.nextLine();
 	}
+
+	public void displayAllItems(){
+		//list coming from the map, that is just the values(vendingtimes)
+
+	}
+
+
+
+
+
+
 
 	public Map<String, List<VendingItem>> loadItems(){
 		File inputFile = new File("main.csv"); //taking in main.csv
@@ -92,10 +107,25 @@ public class VendingMachineCLI {
 		return item;
 	}
 
-	public VendingItem selectItem(String slot){
-		//slot will be the key
-		//check if slot exists
-		//check if slot has items left(list of 5 of that item)
+	public void selectItem(){
+		String slot = userInput.nextLine();
+		if(!inventory.containsKey(slot)){
+			System.out.println("The slot you entered does not exist.");
+			selectItem();
+			return;
+		}
+		List<VendingItem> currentStock = inventory.get(slot);
+		int quantity = currentStock.size();
+		if(quantity == 0){
+			System.out.println("This item is out of stock.");
+			return;
+		}
+		VendingItem currentItem = currentStock.get(0);
+		System.out.println("The item you entered has: " + quantity + " inventory in stock.");
+		System.out.println("This item is " + currentItem.getName() + " and costs $" + currentItem.getCost() + ".");
+
+
+
 	}
 
 }
