@@ -16,6 +16,7 @@ public class VendingMachineCLI {
 	private Menu menu;
 
 	private Map<String, List<VendingItem>> inventory;
+	private Map<String, String> whatGoesInEachSlot;
 	private Scanner userInput  = new Scanner(System.in);
 
 	public VendingMachineCLI(Menu menu) {
@@ -44,14 +45,32 @@ public class VendingMachineCLI {
 			}
 		}
 		inventory = loadItems();
-
+		whatGoesInEachSlot = indexItems();
 		System.out.println("Please enter an item selection: ");
 		String slot = userInput.nextLine();
 	}
 
-	public void displayAllItems(){
-		//list coming from the map, that is just the values(vendingtimes)
+	private Map<String, String> indexItems(){
+		Map<String, String> index = new HashMap<>();
+		for (Map.Entry<String, List<VendingItem>> element : inventory.entrySet()) {
+			List<VendingItem> list = element.getValue();
+			VendingItem item = list.get(0);
 
+			String slot = item.getSlot();
+			String name = item.getName();
+			index.put(slot, name);
+		}
+		return index;
+	}
+
+	public void displayAllItems(){
+		//list coming from the map, that is just the values
+		if (list.size() == 0){
+			System.out.println();
+		}
+		VendingItem item = list.get(0);
+		String name = item.getName();
+		System.out.println(name);
 	}
 
 
