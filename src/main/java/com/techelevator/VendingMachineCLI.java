@@ -3,6 +3,11 @@ package com.techelevator;
 // Menu is provided to you as a suggested class to handle user input
 // Build out a menu class to start
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class VendingMachineCLI {
 
 	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
@@ -36,5 +41,22 @@ public class VendingMachineCLI {
 				break;
 			}
 		}
+	}
+
+	public List<VendingItem> loadItems(){
+		File inputFile = new File("main.csv");
+		List<VendingItem> vendingItems = new ArrayList<>();
+
+
+		try{
+			Scanner input = new Scanner(inputFile);
+			while(input.hasNextLine()){
+				String nextLine = input.nextLine();
+				nextLine.split(",");
+				loadItems.add();
+			}
+		}
+
+
 	}
 }
