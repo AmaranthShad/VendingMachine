@@ -7,20 +7,26 @@ import java.util.Scanner;
 
 public class Menu {
 
-    private PrintWriter out;
-    private Scanner in;
+    private final PrintWriter out;
+    private final Scanner in;
 
     public Menu(InputStream input, OutputStream output) {
         this.out = new PrintWriter(output);
         this.in = new Scanner(input);
     }
 
+    /**
+     * shows the user what options there are
+     * takes the user's input
+     * spits out a valid option
+     * @param options
+     * @return choice
+     */
     public Object getChoiceFromOptions(Object[] options) {
-        Object choice = null;
-        while (choice == null) {
-            displayMenuOptions(options);
-            choice = getChoiceFromUserInput(options);
-        }
+        displayMenuOptions(options);
+        Object choice = getChoiceFromUserInput(options);
+        if (choice == null)
+            choice = getChoiceFromOptions(options);
         return choice;
     }
 
