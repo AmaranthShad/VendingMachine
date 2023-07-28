@@ -31,8 +31,8 @@ public class VendingMachineCLI {
     private Map<String, VendingItem> index;
     private boolean isDiscounted = false;
 
-    private final LocalDate;
-    private static final LocalTime;
+    private LocalDate ld = LocalDate.now();
+    private LocalTime lt = LocalTime.now();
 
 
 
@@ -167,17 +167,15 @@ public class VendingMachineCLI {
             Object choice = menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
             if (choice.equals(PURCHASE_OPTION_1)) {
                 feedMoney();
-                //print action to log with date, time, feed me, amount deposited, and ending balance
-                output.println(LocalDate + " " + LocalTime + " " + "FEED MONEY: " + cashRegister.addToBalance(1.0) + " " + cashRegister.getFormattedBalance());
             } else if (choice.equals(PURCHASE_OPTION_2)) {
                 displayAllItems();
                 selectProductInPurchase();
                 //print action to log with date, time, item purchased, item cost, and ending balance
             } else if (choice.equals(PURCHASE_OPTION_3)) {
-                cashRegister.getChange();
+                String change = cashRegister.getChange();
                 isDiscounted = false;
                 return;
-                //print action to log with date, time, Give change, change given, and 0 balance(should be ending bal automatically)
+                log.println(ld + " " + lt + " " + "GIVE CHANGE: " + change + " " + cashRegister.getFormattedBalance());
             } else {
                 break;
             }
@@ -196,6 +194,7 @@ public class VendingMachineCLI {
             } else {
                 break;
             }
+            log.println(ld + " " + lt + " " + "FEED MONEY: " + cashRegister.addToBalance(1.0) + " " + cashRegister.getFormattedBalance());
         }
     }
 
@@ -222,6 +221,7 @@ public class VendingMachineCLI {
         System.out.println("You have purchased: " + name + " for " + cost);
         item.getEaten();
         isDiscounted= !isDiscounted;
+        log.println(ld + " " + lt + " " + name + " " + slot + " " + getCost(slot) + " " + cashRegister.getFormattedBalance());
     }
 
 }

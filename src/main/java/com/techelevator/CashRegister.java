@@ -1,9 +1,13 @@
 package com.techelevator;
 
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class CashRegister {
     private double balance;
+    private LocalDate ld = LocalDate.now();
+    private LocalTime lt = LocalTime.now();
 
     public CashRegister() {
         balance = 0.0;
@@ -23,10 +27,11 @@ public class CashRegister {
         }
         balance += money;
     }
-    public void getChange(){
+    public String getChange(){
         int quarters = 0;
         int dimes = 0;
         int nickels = 0;
+        String change = getFormattedBalance();
         while (balance > 0.25){
             balance -= 0.25;
             quarters++;
@@ -47,6 +52,7 @@ public class CashRegister {
         if (nickels>0)
             System.out.print(nickels + " nickel(s) ");
         balance = 0;
+        return change;
     }
 
     public void subtractPurchase(double cost){
