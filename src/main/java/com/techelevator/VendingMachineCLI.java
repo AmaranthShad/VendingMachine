@@ -5,6 +5,7 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.text.NumberFormat;
 import java.util.*;
 import java.util.List;
@@ -52,8 +53,8 @@ public class VendingMachineCLI {
                 break;
             }
         }
-
     }
+
 
     //print line asking them to enter choice 1,2,or 3 1 displays displayAllItems() and has another scanner that asks them if they would like to return to main menu or exit
     public void displayAllItems() {
