@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -21,9 +22,10 @@ public class VendingMachineCLI {
     private static final String PURCHASE_OPTION_2 = "Select Product";
     private static final String PURCHASE_OPTION_3 = "Finish Transaction";
     private static final String[] PURCHASE_MENU_OPTIONS = {PURCHASE_OPTION_1, PURCHASE_OPTION_2, PURCHASE_OPTION_3};
-    private static final String INSERT_BILL = "Insert $1";
+    private static final String INSERT_1 = "Insert $1";
+    private static final String INSERT_5 = "Insert $5";
     private static final String QUIT = "Quit";
-    private static final String[] FEED_MONEY_OPTIONS = {INSERT_BILL, QUIT};
+    private static final String[] FEED_MONEY_OPTIONS = {INSERT_1, INSERT_5, QUIT};
     private final Scanner userInput = new Scanner(System.in);
     private final CashRegister cashRegister;
     private final Menu menu;
@@ -37,7 +39,6 @@ public class VendingMachineCLI {
     public VendingMachineCLI(Menu menu) {
         this.menu = menu;
         this.cashRegister = new CashRegister();
-        //impelemenngfntraiont renameing old log
         this.log = new Log();
     }
 
@@ -188,37 +189,36 @@ public class VendingMachineCLI {
             System.out.println("Current money: " + cashRegister.getFormattedBalance());
             Object choice = menu.getChoiceFromOptions(FEED_MONEY_OPTIONS);
             double moneyToAdd = 0;
-            if (choice.equals(INSERT_BILL)) {
+            if (choice.equals(INSERT_1)) {
                 moneyToAdd = 1.0;
+            } else if (choice.equals(INSERT_5)) {
+                moneyToAdd = 5.0;
             } else if (choice.equals(QUIT)) {
                 return;
             } else {
                 break;
             }
             cashRegister.addToBalance(moneyToAdd);
-            String ld = String.valueOf(LocalDate.now()+" ");
-            String lt = String.valueOf(LocalTime.now()+" ");
-            String moneyAdded = NumberFormat.getCurrencyInstance().format(moneyToAdd);
-            String totalBal = cashRegister.getFormattedBalance();
-            log.printNext(ld + lt + " FEED MONEY: " +moneyAdded + totalBal);
+            log(" FEED MONEY: ", moneyToAdd);
         }
     }
     private void log(String thing, double transaction){
         String ld = String.valueOf(LocalDate.now()+" ");
-        String lt = String.valueOf(LocalTime.now()+" ");
+        String lt = String.valueOf(LocalTime.now());
+        lt = lt.substring(0, lt.lastIndexOf(".")) + " ";
         String moneyAdded = NumberFormat.getCurrencyInstance().format(transaction);
-        String totalBal = cashRegister.getFormattedBalance();
+        String totalBal = " " + cashRegister.getFormattedBalance();
         log.printNext(ld + lt + thing + moneyAdded + totalBal);
     }
     private void selectProductInPurchase() {
         System.out.println("Please make a selection: ");
         String slot = userInput.nextLine();
         if(!index.containsKey(slot)){
-            System.out.println("The selection you entered does not exist.");
+            System.out.println("The selection you made does not exist.");
             return;
         }
         if(getQuantity(slot).equals("SOLD OUT")){
-            System.out.println("The selection you entered is SOLD OUT.");
+            System.out.println("The selection you made is SOLD OUT.");
             return;
         }
         if (getCost(slot) > cashRegister.getBalance()){

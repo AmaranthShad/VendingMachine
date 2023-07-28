@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
@@ -13,6 +15,14 @@ public class Log {
     private final File log;
     public Log() {
         this.log = new File("Log.txt");
+        if (!log.exists()){
+            return;
+        }
+        String oldLogName = LocalDate.now()+"-"+ LocalTime.now()+"log.txt";
+        File oldLog = new File(oldLogName);
+        if(!log.delete()){
+            System.out.println("Uh oh can't delete old log");
+        }
     }
 
     public void printNext(String newLine){

@@ -43,7 +43,7 @@ They're guided through the purchasing process menu:
         a code to select an item.
         - [X] If the product code doesn't exist, the vending machine informs the customer and returns them
         to the Purchase menu.
-        - [ ] If a product is currently sold out, the vending machine informs the customer and returns them to the
+        - [X] If a product is currently sold out, the vending machine informs the customer and returns them to the
         Purchase menu.
         - [X] If a customer selects a valid product, it's dispensed to the customer.
         - [X] Dispensing an item prints the item name, cost, and the money
@@ -64,11 +64,11 @@ They're guided through the purchasing process menu:
         - [X] The machine's current balance updates to $0 remaining.
     - [X] After completing their purchase, the user returns to the "Main" menu to
     continue using the vending machine.
-- [ ] The vending machine logs all transactions to prevent theft from the vending machine.
-   - [ ] Each purchase must generate a line in a file called `Log.txt`.
-   - [ ] The lines must follow the format shown in the following example.
-       - [ ] The first dollar amount is the amount deposited, spent, or given as change.
-       - [ ] The second dollar amount is the new balance.
+- [X] The vending machine logs all transactions to prevent theft from the vending machine.
+   - [X] Each purchase must generate a line in a file called `Log.txt`.
+   - [X] The lines must follow the format shown in the following example.
+       - [X] The first dollar amount is the amount deposited, spent, or given as change.
+       - [X] The second dollar amount is the new balance.
         ```
         01/01/2019 12:00:00 PM FEED MONEY: $5.00 $5.00 
         01/01/2019 12:00:15 PM FEED MONEY: $5.00 $10.00 
