@@ -45,12 +45,19 @@ public abstract class VendingItem {
         this.cost = cost;
     }
 
-    public double getPurchasePrice(){
+    public double purchase(){
         if (isDiscounted){
             isDiscounted = false;
             return getCost() - 1.0;
         }
         isDiscounted =true;
+        return getCost();
+
+    }
+    public double getPurchasePrice(){
+        if (isDiscounted){
+            return getCost() - 1.0;
+        }
         return getCost();
     }
     public abstract void getEaten();

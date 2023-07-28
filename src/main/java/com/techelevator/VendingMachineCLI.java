@@ -3,25 +3,21 @@ package com.techelevator;
 // Menu is provided to you as a suggested class to handle user input
 // Build out a menu class to start
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.NumberFormat;
 import java.util.*;
 import java.util.List;
-import java.util.spi.CurrencyNameProvider;
 
 public class VendingMachineCLI {
 
 	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
 	private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
 	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE };
-
-	private Menu menu;
-
+	private final Menu menu;
 	private Map<String, List<VendingItem>> inventory;
 	private Map<String, VendingItem> index;
-	private Scanner userInput  = new Scanner(System.in);
+	private final Scanner userInput  = new Scanner(System.in);
 	private double balance = 0;
 
 	public VendingMachineCLI(Menu menu) {
@@ -61,36 +57,18 @@ public class VendingMachineCLI {
 			String name = item.getName();
 			String quantity = getQuantity(slot);
 
-			System.out.println(slot + " : " + name + " " + getCost(slot) + " | " + quantity);
+			System.out.println(slot + " : " + name + " " + getFormattedCost(slot) + " | " + quantity);
 		}
 
 
 
 	}
 
-	public void selectItem(String slot){
-		if(!inventory.containsKey(slot)){
-			System.out.println("The slot you entered does not exist.");
-			return;
-		}
 
-		List<VendingItem> currentStock = inventory.get(slot);
-		int quantity = currentStock.size();
-
-		if(quantity == 0){
-			System.out.println("This item is out of stock.");
-			return;
-		}
-		if(!purchaseInStock(slot)){
-			System.out.println("Not enough money");
-			return;
-		}
-		currentStock.remove(0).getEaten();
-	}
 
 	private boolean purchaseInStock(String slot) {
 		VendingItem item = index.get(slot);
-
+		return false;
 	}
 
 	private Map<String, VendingItem> indexItems(){
@@ -104,12 +82,12 @@ public class VendingMachineCLI {
 		return index;
 	}
 
-	private String getCost(String code) {
+	private String getFormattedCost(String code) {
 		VendingItem item = index.get(code);
 		double money = item.getPurchasePrice();
 		NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
-		String cost = formatter.format(money);
+		return formatter.format(money);
 	}
 
 	public Map<String, List<VendingItem>> loadItems(){
