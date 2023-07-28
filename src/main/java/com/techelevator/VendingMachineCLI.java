@@ -23,9 +23,11 @@ public class VendingMachineCLI {
     private static final String OPTION_2 = "Select Product";
     private static final String OPTION_3 = "Finish Transaction";
     private static final String[] PURCHASE_MENU_OPTIONS = {OPTION_1, OPTION_2, OPTION_3};
+    private final CashRegister cashRegister;
 
     public VendingMachineCLI(Menu menu) {
         this.menu = menu;
+        this.cashRegister = new CashRegister();
     }
 
     public static void main(String[] args) {
@@ -151,31 +153,26 @@ public class VendingMachineCLI {
 
     private void purchaseMenu() {
         while (true) {
-            System.out.println("Current money provided: " + 12);
-            // Use a method from your Menu class to initialize this value
+            System.out.println("Current money provided: " + cashRegister.getFormattedBalance());
             Object choice = menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
-
             if (choice.equals(OPTION_1)) {
-                //FEED MONEY
+                System.out.println("Current money provided: " + cashRegister.getFormattedBalance());
+                System.out.println("Enter money: ");
+                String money = userInput.nextLine();
+                double newMoney = Double. parseDouble(money);
+                cashRegister.addToBalance(newMoney);
+                System.out.println("Updated balance: ");
             } else if (choice.equals(OPTION_2)) {
                 displayAllItems();
                 selectProductInPurchase();
             } else if (choice.equals(OPTION_3)) {
-                //finish transaction
+                return;
             } else {
                 break;
             }
         }
 
     }
-
-//    private void feedMoney() {
-//        System.out.println("Current money provided: " + cashRegister.getBalance());
-//        System.out.println("Feed in more money: ");
-//        double addedMoney = input.nextLine();
-//        cashRegister.getBalance() += addedMoney;
-//        System.out.println("Updated current money: " + cashRegister.getBalance());
-//    }
 
     private void selectProductInPurchase() {
         System.out.println("Please make a selection: ");
@@ -192,11 +189,19 @@ public class VendingMachineCLI {
         String name = item.getName();
         String cost = getFormattedCost(slot);
         String quantity = getQuantity(slot);
-        System.out.println("The selection you made: " + name + " costs " + cost + " | There are " + quantity + " remaining in stock.");
-
+        if (cashRegister.getBalance() < item.getCost()) {
+            System.out.println("Insufficient balance. ");
+            return;
+        }
+        cashRegister.subtractPurchase(item.getPurchasePrice());
+        System.out.println("You have purchased: " + name + " for " + cost + " | Your new balance is  " + cashRegister.getFormattedBalance() + ".");
+        item.getEaten();
 
 
     }
+
+
+
 
 
 }

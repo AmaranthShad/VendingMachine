@@ -48,4 +48,10 @@ public class CashRegister {
             System.out.print(nickels + " nickels");
         balance = 0;
     }
+
+    public void subtractPurchase(double cost){
+        balance -= cost;
+    }
 }
+
+
