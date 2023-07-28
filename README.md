@@ -33,9 +33,9 @@ They're guided through the purchasing process menu:
     
     ```
 - The purchase process flow is as follows:
-    - [ ] Selecting "(1) Feed Money" allows the customer to repeatedly feed money into the
+    - [X] Selecting "(1) Feed Money" allows the customer to repeatedly feed money into the
     machine in whole dollar amounts.
-        - [ ] The "Current Money Provided" indicates how much money the customer
+        - [X] The "Current Money Provided" indicates how much money the customer
         has fed into the machine.
     - [X] Selecting "(2) Select Product" allows the customer to select a product to
     purchase.

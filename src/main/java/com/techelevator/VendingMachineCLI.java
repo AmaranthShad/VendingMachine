@@ -14,15 +14,18 @@ public class VendingMachineCLI {
     private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
     private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
     private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE};
+    private static final String PURCHASE_OPTION_1 = "Feed Money";
+    private static final String PURCHASE_OPTION_2 = "Select Product";
+    private static final String PURCHASE_OPTION_3 = "Finish Transaction";
+    private static final String[] PURCHASE_MENU_OPTIONS = {PURCHASE_OPTION_1, PURCHASE_OPTION_2, PURCHASE_OPTION_3};
+    private static final String INSERT_BILL = "Insert $1";
+    private static final String QUIT = "Quit";
+    private static final String[] FEED_MONEY_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE};
+    private final Scanner userInput = new Scanner(System.in);
+    private final CashRegister cashRegister;
     private final Menu menu;
     private Map<String, List<VendingItem>> inventory;
     private Map<String, VendingItem> index;
-    private final Scanner userInput = new Scanner(System.in);
-    private static final String OPTION_1 = "Feed Money";
-    private static final String OPTION_2 = "Select Product";
-    private static final String OPTION_3 = "Finish Transaction";
-    private static final String[] PURCHASE_MENU_OPTIONS = {OPTION_1, OPTION_2, OPTION_3};
-    private final CashRegister cashRegister;
     private boolean isDiscounted = false;
 
     public VendingMachineCLI(Menu menu) {
@@ -154,23 +157,12 @@ public class VendingMachineCLI {
         while (true) {
             System.out.println("Current money: " + cashRegister.getFormattedBalance());
             Object choice = menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
-            if (choice.equals(OPTION_1)) {
-                System.out.println("Current money: " + cashRegister.getFormattedBalance());
-                System.out.println("Enter money: ");
-                String money = userInput.nextLine();
-                double newMoney = 0;
-                try {
-                    newMoney = Double.parseDouble(money);
-                } catch (NumberFormatException e){
-                    newMoney =0;
-                    System.out.println("Your money is fake");
-                }
-                cashRegister.addToBalance(newMoney);
-                System.out.println();
-            } else if (choice.equals(OPTION_2)) {
+            if (choice.equals(PURCHASE_OPTION_1)) {
+                feedMoney();
+            } else if (choice.equals(PURCHASE_OPTION_2)) {
                 displayAllItems();
                 selectProductInPurchase();
-            } else if (choice.equals(OPTION_3)) {
+            } else if (choice.equals(PURCHASE_OPTION_3)) {
                 cashRegister.getChange();
                 isDiscounted = false;
                 return;
@@ -179,6 +171,20 @@ public class VendingMachineCLI {
             }
         }
 
+    }
+
+    private void feedMoney() {
+        while (true) {
+            System.out.println("Current money: " + cashRegister.getFormattedBalance());
+            Object choice = menu.getChoiceFromOptions(FEED_MONEY_OPTIONS);
+            if (choice.equals(INSERT_BILL)) {
+                feedMoney();
+            } else if (choice.equals(QUIT)) {
+                return;
+            } else {
+                break;
+            }
+        }
     }
 
     private void selectProductInPurchase() {
