@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.List;
 
@@ -21,13 +23,18 @@ public class VendingMachineCLI {
     private static final String[] PURCHASE_MENU_OPTIONS = {PURCHASE_OPTION_1, PURCHASE_OPTION_2, PURCHASE_OPTION_3};
     private static final String INSERT_BILL = "Insert $1";
     private static final String QUIT = "Quit";
-    private static final String[] FEED_MONEY_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE};
+    private static final String[] FEED_MONEY_OPTIONS = {INSERT_BILL, QUIT};
     private final Scanner userInput = new Scanner(System.in);
     private final CashRegister cashRegister;
     private final Menu menu;
     private Map<String, List<VendingItem>> inventory;
     private Map<String, VendingItem> index;
     private boolean isDiscounted = false;
+
+    private final LocalDate;
+    private static final LocalTime;
+
+
 
     public VendingMachineCLI(Menu menu) {
         this.menu = menu;
@@ -160,13 +167,17 @@ public class VendingMachineCLI {
             Object choice = menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
             if (choice.equals(PURCHASE_OPTION_1)) {
                 feedMoney();
+                //print action to log with date, time, feed me, amount deposited, and ending balance
+                output.println(LocalDate + " " + LocalTime + " " + "FEED MONEY: " + cashRegister.addToBalance(1.0) + " " + cashRegister.getFormattedBalance());
             } else if (choice.equals(PURCHASE_OPTION_2)) {
                 displayAllItems();
                 selectProductInPurchase();
+                //print action to log with date, time, item purchased, item cost, and ending balance
             } else if (choice.equals(PURCHASE_OPTION_3)) {
                 cashRegister.getChange();
                 isDiscounted = false;
                 return;
+                //print action to log with date, time, Give change, change given, and 0 balance(should be ending bal automatically)
             } else {
                 break;
             }
@@ -179,7 +190,7 @@ public class VendingMachineCLI {
             System.out.println("Current money: " + cashRegister.getFormattedBalance());
             Object choice = menu.getChoiceFromOptions(FEED_MONEY_OPTIONS);
             if (choice.equals(INSERT_BILL)) {
-                feedMoney();
+                cashRegister.addToBalance(1.0);
             } else if (choice.equals(QUIT)) {
                 return;
             } else {
