@@ -41,11 +41,11 @@ public class CashRegister {
         }
         System.out.print("Your change is: ");
         if (quarters>0)
-            System.out.print(quarters + " quarters");
+            System.out.print(quarters + " quarter(s) ");
         if (dimes>0)
-            System.out.print(dimes + " dimes");
+            System.out.print(dimes + " dime(s) ");
         if (nickels>0)
-            System.out.print(nickels + " nickels");
+            System.out.print(nickels + " nickel(s) ");
         balance = 0;
     }
 

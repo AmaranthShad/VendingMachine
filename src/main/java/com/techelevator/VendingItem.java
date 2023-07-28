@@ -6,14 +6,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public abstract class VendingItem {
-    private static boolean isDiscounted;
-    private String slot;
-    private String name;
-    private double cost;
-
-    public VendingItem(){
-
-    }
+    private final String slot;
+    private final String name;
+    private final double cost;
 
     public VendingItem(String slot, String name, double cost) {
         this.slot = slot;
@@ -25,41 +20,20 @@ public abstract class VendingItem {
         return slot;
     }
 
-    public void setSlot(String slot) {
-        this.slot = slot;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public double getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
-
-    public double purchase(){
-        if (isDiscounted){
-            isDiscounted = false;
-            return getCost() - 1.0;
-        }
-        isDiscounted =true;
-        return getCost();
-
-    }
-    public double getPurchasePrice(){
-        if (isDiscounted){
-            return getCost() - 1.0;
-        }
-        return getCost();
-    }
+//    public double getPurchasePrice(){
+//        if (isDiscounted){
+//            return getCost() - 1.0;
+//        }
+//        return getCost();
+//    }
     public abstract void getEaten();
 
 }

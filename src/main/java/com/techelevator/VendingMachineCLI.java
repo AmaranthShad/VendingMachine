@@ -18,12 +18,12 @@ public class VendingMachineCLI {
     private Map<String, List<VendingItem>> inventory;
     private Map<String, VendingItem> index;
     private final Scanner userInput = new Scanner(System.in);
-    private double balance = 0;
     private static final String OPTION_1 = "Feed Money";
     private static final String OPTION_2 = "Select Product";
     private static final String OPTION_3 = "Finish Transaction";
     private static final String[] PURCHASE_MENU_OPTIONS = {OPTION_1, OPTION_2, OPTION_3};
     private final CashRegister cashRegister;
+    private boolean isDiscounted = false;
 
     public VendingMachineCLI(Menu menu) {
         this.menu = menu;
@@ -69,12 +69,6 @@ public class VendingMachineCLI {
 
     }
 
-
-    private boolean purchaseInStock(String slot) {
-        VendingItem item = index.get(slot);
-        return false;
-    }
-
     private Map<String, VendingItem> indexItems() {
         Map<String, VendingItem> index = new HashMap<>();
         for (Map.Entry<String, List<VendingItem>> element : inventory.entrySet()) {
@@ -86,9 +80,8 @@ public class VendingMachineCLI {
         return index;
     }
 
-    private String getFormattedCost(String code) {
-        VendingItem item = index.get(code);
-        double money = item.getPurchasePrice();
+    private String getFormattedCost(String slot) {
+        double money = getCost(slot);
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
         return formatter.format(money);
@@ -123,14 +116,20 @@ public class VendingMachineCLI {
             return "SOLD OUT";
         return String.valueOf(quantity);
     }
+    private double getCost(String slot){
+        VendingItem item = index.get(slot);
+        double cost = item.getCost();
+        if (isDiscounted)
+            cost -= 1.0;
+        return cost;
+    }
 
     public VendingItem getItem(String nextLine) {
         String[] itemSpecs = nextLine.split(","); // turning line of data into string array and splitting into 4 items
         String slot = itemSpecs[0];
         String name = itemSpecs[1];
         double cost = Double.parseDouble(itemSpecs[2]);
-        String type = "";
-        type = itemSpecs[3];
+        String type = itemSpecs[3];
 
         VendingItem item = null;
         switch (type) {
@@ -153,19 +152,27 @@ public class VendingMachineCLI {
 
     private void purchaseMenu() {
         while (true) {
-            System.out.println("Current money provided: " + cashRegister.getFormattedBalance());
+            System.out.println("Current money: " + cashRegister.getFormattedBalance());
             Object choice = menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
             if (choice.equals(OPTION_1)) {
-                System.out.println("Current money provided: " + cashRegister.getFormattedBalance());
+                System.out.println("Current money: " + cashRegister.getFormattedBalance());
                 System.out.println("Enter money: ");
                 String money = userInput.nextLine();
-                double newMoney = Double. parseDouble(money);
+                double newMoney = 0;
+                try {
+                    newMoney = Double.parseDouble(money);
+                } catch (NumberFormatException e){
+                    newMoney =0;
+                    System.out.println("Your money is fake");
+                }
                 cashRegister.addToBalance(newMoney);
-                System.out.println("Updated balance: ");
+                System.out.println();
             } else if (choice.equals(OPTION_2)) {
                 displayAllItems();
                 selectProductInPurchase();
             } else if (choice.equals(OPTION_3)) {
+                cashRegister.getChange();
+                isDiscounted = false;
                 return;
             } else {
                 break;
@@ -185,23 +192,18 @@ public class VendingMachineCLI {
             System.out.println("The selection you entered is SOLD OUT.");
             return;
         }
-        VendingItem item = index.get(slot);
-        String name = item.getName();
-        String cost = getFormattedCost(slot);
-        String quantity = getQuantity(slot);
-        if (cashRegister.getBalance() < item.getCost()) {
-            System.out.println("Insufficient balance. ");
+        if (getCost(slot) > cashRegister.getBalance()){
+            System.out.println("Insufficient Balance!");
             return;
         }
-        cashRegister.subtractPurchase(item.getPurchasePrice());
-        System.out.println("You have purchased: " + name + " for " + cost + " | Your new balance is  " + cashRegister.getFormattedBalance() + ".");
+        VendingItem item = inventory.get(slot).remove(0);
+        cashRegister.subtractPurchase(getCost(slot));
+        String name = item.getName();
+        String cost = getFormattedCost(slot);
+        String balance = cashRegister.getFormattedBalance();
+        System.out.println("You have purchased: " + name + " for " + cost);
         item.getEaten();
-
-
+        isDiscounted= !isDiscounted;
     }
-
-
-
-
 
 }

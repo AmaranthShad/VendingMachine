@@ -6,7 +6,7 @@ with everyone's bank accounts, allowing customers to purchase products from thei
 
 ### Application requirements
 
-- [ ] The vending machine dispenses beverages, candy, munchies, and gum.
+- [X] The vending machine dispenses beverages, candy, munchies, and gum.
 - [X] A main menu must display when the software runs, presenting the following options:
     > ```
     > (1) Display Vending Machine Items
@@ -21,8 +21,8 @@ with a list of all items in the vending machine with its quantity remaining:
     - [X] Each vending machine product has a slot identifier and a purchase price.
     - [X] Each slot in the vending machine has enough room for 5 of that product.
     - [X] Every product is initially stocked to the maximum amount.
-    - [X]A product that has run out must indicate that it's SOLD OUT.
-- [ ] When the customer selects "(2) Purchase", they start with a current money provided of 0.00.
+    - [X] A product that has run out must indicate that it's SOLD OUT.
+- [X] When the customer selects "(2) Purchase", they start with a current money provided of 0.00.
 They're guided through the purchasing process menu:
     ```
     Current Money Provided: $2.00
@@ -37,31 +37,31 @@ They're guided through the purchasing process menu:
     machine in whole dollar amounts.
         - [ ] The "Current Money Provided" indicates how much money the customer
         has fed into the machine.
-    - [ ] Selecting "(2) Select Product" allows the customer to select a product to
+    - [X] Selecting "(2) Select Product" allows the customer to select a product to
     purchase.
-        - [ ] Show the list of products available and allow the customer to enter
+        - [X] Show the list of products available and allow the customer to enter
         a code to select an item.
-        - [ ] If the product code doesn't exist, the vending machine informs the customer and returns them
+        - [X] If the product code doesn't exist, the vending machine informs the customer and returns them
         to the Purchase menu.
         - [ ] If a product is currently sold out, the vending machine informs the customer and returns them to the
         Purchase menu.
-        - [ ] If a customer selects a valid product, it's dispensed to the customer.
-        - [ ] Dispensing an item prints the item name, cost, and the money
+        - [X] If a customer selects a valid product, it's dispensed to the customer.
+        - [X] Dispensing an item prints the item name, cost, and the money
         remaining. Dispensing also returns a message:
           - [X] All Munchy items print "Crunch Crunch, Yum!"
           - [X] All Candy items print "Yummy Yummy, So Sweet!"
           - [X] All Drink items print "Glug Glug, Yum!"
           - [X] All Gum items print "Chew Chew, Yum!"
-        - [ ] After the machine dispenses the product, the machine must update the customer's balance
+        - [X] After the machine dispenses the product, the machine must update the customer's balance
         accordingly and return the customer to the Purchase menu.
-        - [ ] To celebrate August, this machine is running a BOGODO sale, buy one
+        - [X] To celebrate August, this machine is running a BOGODO sale, buy one
         item, get one dollar off any second item.
-            - [ ] After an item is purchased with the discount the discount resets. For example, if a third item is purchased a discount IS NOT applied. If a fourth item is purchased the discount DOES apply, and so on.
-    - [ ] Selecting "(3) Finish Transaction" allows the customer to complete the
+            - [X] After an item is purchased with the discount the discount resets. For example, if a third item is purchased a discount IS NOT applied. If a fourth item is purchased the discount DOES apply, and so on.
+    - [X] Selecting "(3) Finish Transaction" allows the customer to complete the
     transaction and receive any remaining change.
-        - [ ] The machine returns the customer's money using nickels, dimes, and quarters
+        - [X] The machine returns the customer's money using nickels, dimes, and quarters
         (using the smallest amount of coins possible).
-        - [ ] The machine's current balance updates to $0 remaining.
+        - [X] The machine's current balance updates to $0 remaining.
     - [X] After completing their purchase, the user returns to the "Main" menu to
     continue using the vending machine.
 - [ ] The vending machine logs all transactions to prevent theft from the vending machine.
