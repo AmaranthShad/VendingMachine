@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public abstract class VendingItem {
+    private static boolean isDiscounted;
     private String slot;
     private String name;
     private double cost;
@@ -44,6 +45,14 @@ public abstract class VendingItem {
         this.cost = cost;
     }
 
+    public double getPurchasePrice(){
+        if (isDiscounted){
+            isDiscounted = false;
+            return getCost() - 1.0;
+        }
+        isDiscounted =true;
+        return getCost();
+    }
     public abstract void getEaten();
 
 }
