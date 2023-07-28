@@ -27,18 +27,18 @@ public class VendingMachineCLI {
     private final Scanner userInput = new Scanner(System.in);
     private final CashRegister cashRegister;
     private final Menu menu;
+    private final Log log;
     private Map<String, List<VendingItem>> inventory;
     private Map<String, VendingItem> index;
     private boolean isDiscounted = false;
-
-    private LocalDate ld = LocalDate.now();
-    private LocalTime lt = LocalTime.now();
 
 
 
     public VendingMachineCLI(Menu menu) {
         this.menu = menu;
         this.cashRegister = new CashRegister();
+        //impelemenngfntraiont renameing old log
+        this.log = new Log();
     }
 
     public static void main(String[] args) {
@@ -172,10 +172,10 @@ public class VendingMachineCLI {
                 selectProductInPurchase();
                 //print action to log with date, time, item purchased, item cost, and ending balance
             } else if (choice.equals(PURCHASE_OPTION_3)) {
-                String change = cashRegister.getChange();
+                double change = cashRegister.getChange();
+                log("GIVE CHANGE: ", change);
                 isDiscounted = false;
                 return;
-                log.println(ld + " " + lt + " " + "GIVE CHANGE: " + change + " " + cashRegister.getFormattedBalance());
             } else {
                 break;
             }
@@ -187,17 +187,29 @@ public class VendingMachineCLI {
         while (true) {
             System.out.println("Current money: " + cashRegister.getFormattedBalance());
             Object choice = menu.getChoiceFromOptions(FEED_MONEY_OPTIONS);
+            double moneyToAdd = 0;
             if (choice.equals(INSERT_BILL)) {
-                cashRegister.addToBalance(1.0);
+                moneyToAdd = 1.0;
             } else if (choice.equals(QUIT)) {
                 return;
             } else {
                 break;
             }
-            log.println(ld + " " + lt + " " + "FEED MONEY: " + cashRegister.addToBalance(1.0) + " " + cashRegister.getFormattedBalance());
+            cashRegister.addToBalance(moneyToAdd);
+            String ld = String.valueOf(LocalDate.now()+" ");
+            String lt = String.valueOf(LocalTime.now()+" ");
+            String moneyAdded = NumberFormat.getCurrencyInstance().format(moneyToAdd);
+            String totalBal = cashRegister.getFormattedBalance();
+            log.printNext(ld + lt + " FEED MONEY: " +moneyAdded + totalBal);
         }
     }
-
+    private void log(String thing, double transaction){
+        String ld = String.valueOf(LocalDate.now()+" ");
+        String lt = String.valueOf(LocalTime.now()+" ");
+        String moneyAdded = NumberFormat.getCurrencyInstance().format(transaction);
+        String totalBal = cashRegister.getFormattedBalance();
+        log.printNext(ld + lt + thing + moneyAdded + totalBal);
+    }
     private void selectProductInPurchase() {
         System.out.println("Please make a selection: ");
         String slot = userInput.nextLine();
@@ -220,8 +232,9 @@ public class VendingMachineCLI {
         String balance = cashRegister.getFormattedBalance();
         System.out.println("You have purchased: " + name + " for " + cost);
         item.getEaten();
+        String thing = name + " "+ slot + " ";
+        log(thing, getCost(slot));
         isDiscounted= !isDiscounted;
-        log.println(ld + " " + lt + " " + name + " " + slot + " " + getCost(slot) + " " + cashRegister.getFormattedBalance());
     }
 
 }

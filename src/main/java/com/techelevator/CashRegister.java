@@ -6,8 +6,6 @@ import java.time.LocalTime;
 
 public class CashRegister {
     private double balance;
-    private LocalDate ld = LocalDate.now();
-    private LocalTime lt = LocalTime.now();
 
     public CashRegister() {
         balance = 0.0;
@@ -27,11 +25,11 @@ public class CashRegister {
         }
         balance += money;
     }
-    public String getChange(){
+    public double getChange(){
         int quarters = 0;
         int dimes = 0;
         int nickels = 0;
-        String change = getFormattedBalance();
+        double change = balance;
         while (balance > 0.25){
             balance -= 0.25;
             quarters++;
