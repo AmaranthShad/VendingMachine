@@ -15,12 +15,15 @@ public class Log {
     private final File log;
     public Log() {
         this.log = new File("Log.txt");
-        if (!log.exists()){
+        if (!log.exists()) {
             return;
         }
-        String oldLogName = LocalDate.now()+"-"+ LocalTime.now()+"log.txt";
+        String time = LocalTime.now().toString();
+        time = time.substring(0, time.lastIndexOf("."));
+        time = time.replaceAll(":", "-");
+        String oldLogName = LocalDate.now().toString() + "_" + time + "log.txt";
         File oldLog = new File(oldLogName);
-        if(!log.delete()){
+        if (!log.renameTo(oldLog)) {
             System.out.println("Uh oh can't delete old log");
         }
     }
