@@ -30,15 +30,15 @@ public class CashRegister {
         int dimes = 0;
         int nickels = 0;
         double change = balance;
-        while (balance > 0.25){
+        while (balance >= 0.21){
             balance -= 0.25;
             quarters++;
         }
-        while (balance > 0.10){
+        while (balance >= 0.16){
             balance -= 0.10;
             dimes++;
         }
-        while (balance > 0.05){
+        while (balance > 0.03){
             balance -= 0.05;
             nickels++;
         }
