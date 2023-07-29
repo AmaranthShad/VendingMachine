@@ -241,4 +241,12 @@ public class VendingMachineCLI {
         isDiscounted= !isDiscounted;
     }
 
+    private void generateSalesReport(){
+        Set<VendingItem> indexSet = new HashSet<>();
+        for (Map.Entry<String, VendingItem> element : index.entrySet()) {
+            indexSet.add(element.getValue());
+        }
+        Log.generateSalesReport(indexSet);
+    }
+
 }
