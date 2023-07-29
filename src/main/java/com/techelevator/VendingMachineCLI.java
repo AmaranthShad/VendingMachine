@@ -227,6 +227,10 @@ public class VendingMachineCLI {
         }
         VendingItem item = inventory.get(slot).remove(0);
         cashRegister.subtractPurchase(getCost(slot));
+        if (isDiscounted)
+            index.get(slot).addDiscountedPurchase();
+        else
+            index.get(slot).addRegularPurchase();
         String name = item.getName();
         String cost = getFormattedCost(slot);
         String balance = cashRegister.getFormattedBalance();

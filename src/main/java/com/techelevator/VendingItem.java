@@ -10,6 +10,9 @@ public abstract class VendingItem {
     private final String name;
     private final double cost;
 
+    private int regularPurchase = 0;
+    private int discountedPurchase = 0;
+
     public VendingItem(String slot, String name, double cost) {
         this.slot = slot;
         this.name = name;
@@ -28,7 +31,21 @@ public abstract class VendingItem {
         return cost;
     }
 
-//    public double getPurchasePrice(){
+    public int getRegularPurchase() {
+        return regularPurchase;
+    }
+    public void addRegularPurchase(){
+        regularPurchase++;
+    }
+
+    public int getDiscountedPurchase() {
+        return discountedPurchase;
+    }
+    public void addDiscountedPurchase(){
+        discountedPurchase++;
+    }
+
+    //    public double getPurchasePrice(){
 //        if (isDiscounted){
 //            return getCost() - 1.0;
 //        }
